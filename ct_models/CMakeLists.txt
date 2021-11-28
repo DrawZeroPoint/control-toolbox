@@ -52,6 +52,7 @@ set(CT_MODELS_LIBRARIES "")
 set(IP_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/InvertedPendulum/codegen")
 set(HYA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyA/codegen")
 set(HYQ_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyQ/codegen")
+set(FRANKA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Franka/codegen")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h)
 
 ################ HyQ #################
@@ -192,6 +193,24 @@ if(BUILD_HYA_LINEARIZATION_TIMINGS)
     list(APPEND CT_MODELS_BINARIES HyAcompareForwardReverse)
 endif(BUILD_HYA_LINEARIZATION_TIMINGS)
 
+
+################ Franka #################
+if(CPPADCG)
+  add_executable(FrankaLinearizationCodegen src/Franka/codegen/FrankaLinearizationCodeGen.cpp)
+  target_include_directories(FrankaLinearizationCodegen PUBLIC ${ct_models_target_include_dirs})
+  target_link_libraries(FrankaLinearizationCodegen ct_rbd)
+  list(APPEND CT_MODELS_BINARIES FrankaLinearizationCodegen)
+endif()
+
+add_library(FrankaLinearizedForward include/ct/models/Franka/codegen/FrankaLinearizedForward.cpp)
+target_include_directories(FrankaLinearizedForward PUBLIC ${ct_models_target_include_dirs})
+target_link_libraries(FrankaLinearizedForward ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES FrankaLinearizedForward)
+
+add_library(FrankaJacInverseDynamicsReverse include/ct/models/Franka/codegen/FrankaInverseDynJacReverse.cpp)
+target_include_directories(FrankaJacInverseDynamicsReverse PUBLIC ${ct_models_target_include_dirs})
+target_link_libraries(FrankaJacInverseDynamicsReverse ct_rbd)
+list(APPEND CT_MODELS_LIBRARIES FrankaJacInverseDynamicsReverse)
 
 ## Declare a cpp library for the ordinary quadrotor
 add_library(quadrotorDynamics
