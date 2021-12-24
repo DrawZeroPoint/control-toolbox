@@ -108,7 +108,9 @@
 				<geometry>
 					<mesh filename="package://ct_models/urdf/HyQ/meshes/leg/lowerleg.dae" scale="1 1 1"/>
 				</geometry>
-				<material name="white"/>
+      <material name="White">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+      </material>
 			</visual>
 			<collision>
 				<geometry>
