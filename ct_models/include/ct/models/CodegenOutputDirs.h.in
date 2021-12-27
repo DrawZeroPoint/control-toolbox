@@ -7,6 +7,7 @@ static const std::string IP_CODEGEN_OUTPUT_DIR = "${IP_CODEGEN_OUTPUT_DIR}";
 static const std::string HYA_CODEGEN_OUTPUT_DIR = "${HYA_CODEGEN_OUTPUT_DIR}";
 static const std::string HYQ_CODEGEN_OUTPUT_DIR = "${HYQ_CODEGEN_OUTPUT_DIR}";
 static const std::string FRANKA_CODEGEN_OUTPUT_DIR = "${FRANKA_CODEGEN_OUTPUT_DIR}";
+static const std::string WALKER_CODEGEN_OUTPUT_DIR = "${WALKER_CODEGEN_OUTPUT_DIR}";
 
 }
 }

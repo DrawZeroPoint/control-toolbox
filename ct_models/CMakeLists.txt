@@ -53,6 +53,7 @@ set(IP_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Inverte
 set(HYA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyA/codegen")
 set(HYQ_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyQ/codegen")
 set(FRANKA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Franka/codegen")
+set(WALKER_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Walker/codegen")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h)
 
 ################ HyQ #################
@@ -137,6 +138,16 @@ if(BUILD_HYQ_LINEARIZATION_TIMINGS)
   target_link_libraries(HyQcompareForwardZero HyQForwardZero ct_rbd)
   list(APPEND CT_MODELS_BINARIES HyQcompareForwardZero)
 endif(BUILD_HYQ_LINEARIZATION_TIMINGS)
+
+
+########## Walker #########
+if(CPPADCG)
+  add_executable(WalkerLinearizationCodegen src/Walker/codegen/WalkerLinearizationCodegen.cpp)
+  target_include_directories(WalkerLinearizationCodegen PUBLIC ${ct_models_target_include_dirs})
+  target_link_libraries(WalkerLinearizationCodegen ct_rbd)
+  list(APPEND CT_MODELS_BINARIES WalkerLinearizationCodegen)
+endif()
+
 
 ########## Inverted Pendulum #########
 if(CPPADCG)
