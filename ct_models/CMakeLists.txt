@@ -148,6 +148,46 @@ if(CPPADCG)
   list(APPEND CT_MODELS_BINARIES WalkerLinearizationCodegen)
 endif()
 
+add_library(WalkerWithContactModelLinearizedForward include/ct/models/Walker/codegen/WalkerWithContactModelLinearizedForward.cpp)
+target_link_libraries(WalkerWithContactModelLinearizedForward ct_rbd)
+list(APPEND CT_MODELS_LIBRARIES WalkerWithContactModelLinearizedForward)
+
+## Forward Dynamics Forward Zero
+add_library(WalkerForwardZero include/ct/models/Walker/codegen/WalkerForwardZero.cpp)
+target_link_libraries(WalkerForwardZero ct_rbd)
+list(APPEND CT_MODELS_LIBRARIES WalkerForwardZero)
+
+### Forward Dynamics
+#add_library(WalkerWithContactModelLinearizedReverse include/ct/models/Walker/codegen/WalkerWithContactModelLinearizedReverse.cpp)
+#target_link_libraries(WalkerWithContactModelLinearizedReverse ct_rbd)
+#list(APPEND CT_MODELS_LIBRARIES WalkerWithContactModelLinearizedReverse)
+#
+#add_library(WalkerBareModelLinearizedForward include/ct/models/Walker/codegen/WalkerBareModelLinearizedForward.cpp)
+#target_link_libraries(WalkerBareModelLinearizedForward ct_rbd )
+#list(APPEND CT_MODELS_LIBRARIES WalkerBareModelLinearizedForward)
+#
+#add_library(WalkerBareModelLinearizedReverse include/ct/models/Walker/codegen/WalkerBareModelLinearizedReverse.cpp)
+#target_link_libraries(WalkerBareModelLinearizedReverse ct_rbd )
+#list(APPEND CT_MODELS_LIBRARIES WalkerBareModelLinearizedReverse)
+
+## Inverse Dynamics
+add_library(WalkerJacInverseDynamicsForward include/ct/models/Walker/codegen/WalkerInverseDynJacForward.cpp)
+target_link_libraries(WalkerJacInverseDynamicsForward ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES WalkerJacInverseDynamicsForward)
+
+add_library(WalkerJacInverseDynamicsReverse include/ct/models/Walker/codegen/WalkerInverseDynJacReverse.cpp)
+target_link_libraries(WalkerJacInverseDynamicsReverse ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES WalkerJacInverseDynamicsReverse)
+
+## ForwardKinematics
+add_library(WalkerJacForwardKinForward include/ct/models/Walker/codegen/WalkerForwardKinJacForward.cpp)
+target_link_libraries(WalkerJacForwardKinForward ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES WalkerJacForwardKinForward)
+
+add_library(WalkerJacForwardKinReverse include/ct/models/Walker/codegen/WalkerForwardKinJacReverse.cpp)
+target_link_libraries(WalkerJacForwardKinReverse ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES WalkerJacForwardKinReverse)
+
 
 ########## Inverted Pendulum #########
 if(CPPADCG)

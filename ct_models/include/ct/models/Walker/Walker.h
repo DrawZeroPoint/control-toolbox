@@ -55,5 +55,5 @@ Licensed under the BSD-2 license (see LICENSE file in main directory)
 
 #include <ct/rbd/robot/robcogen/robcogenHelpers.h>
 
-//#include "HyQUrdfNames.h"
-//#include "codegen/HyQWithContactModelLinearizedForward.h"
+#include "WalkerUrdfNames.h"
+#include "codegen/WalkerWithContactModelLinearizedForward.h"
