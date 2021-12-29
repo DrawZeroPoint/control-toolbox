@@ -54,6 +54,8 @@ set(HYA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyA/co
 set(HYQ_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/HyQ/codegen")
 set(FRANKA_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Franka/codegen")
 set(WALKER_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Walker/codegen")
+set(TALOS_CODEGEN_OUTPUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/Talos/codegen")
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/ct/models/CodegenOutputDirs.h)
 
 ################ HyQ #################
@@ -187,6 +189,57 @@ list(APPEND CT_MODELS_LIBRARIES WalkerJacForwardKinForward)
 add_library(WalkerJacForwardKinReverse include/ct/models/Walker/codegen/WalkerForwardKinJacReverse.cpp)
 target_link_libraries(WalkerJacForwardKinReverse ct_rbd )
 list(APPEND CT_MODELS_LIBRARIES WalkerJacForwardKinReverse)
+
+
+########## Talos #########
+if(CPPADCG)
+  add_executable(TalosLinearizationCodegen src/Talos/codegen/TalosLinearizationCodegen.cpp)
+  target_include_directories(TalosLinearizationCodegen PUBLIC ${ct_models_target_include_dirs})
+  target_link_libraries(TalosLinearizationCodegen ct_rbd)
+  list(APPEND CT_MODELS_BINARIES TalosLinearizationCodegen)
+endif()
+
+
+add_library(TalosWithContactModelLinearizedForward include/ct/models/Talos/codegen/TalosWithContactModelLinearizedForward.cpp)
+target_link_libraries(TalosWithContactModelLinearizedForward ct_rbd)
+list(APPEND CT_MODELS_LIBRARIES TalosWithContactModelLinearizedForward)
+
+## Forward Dynamics Forward Zero
+add_library(TalosForwardZero include/ct/models/Talos/codegen/TalosForwardZero.cpp)
+target_link_libraries(TalosForwardZero ct_rbd)
+list(APPEND CT_MODELS_LIBRARIES TalosForwardZero)
+
+### Forward Dynamics
+#add_library(TalosWithContactModelLinearizedReverse include/ct/models/Talos/codegen/TalosWithContactModelLinearizedReverse.cpp)
+#target_link_libraries(TalosWithContactModelLinearizedReverse ct_rbd)
+#list(APPEND CT_MODELS_LIBRARIES TalosWithContactModelLinearizedReverse)
+#
+#add_library(TalosBareModelLinearizedForward include/ct/models/Talos/codegen/TalosBareModelLinearizedForward.cpp)
+#target_link_libraries(TalosBareModelLinearizedForward ct_rbd )
+#list(APPEND CT_MODELS_LIBRARIES TalosBareModelLinearizedForward)
+#
+#add_library(TalosBareModelLinearizedReverse include/ct/models/Talos/codegen/TalosBareModelLinearizedReverse.cpp)
+#target_link_libraries(TalosBareModelLinearizedReverse ct_rbd )
+#list(APPEND CT_MODELS_LIBRARIES TalosBareModelLinearizedReverse)
+
+## Inverse Dynamics
+add_library(TalosJacInverseDynamicsForward include/ct/models/Talos/codegen/TalosInverseDynJacForward.cpp)
+target_link_libraries(TalosJacInverseDynamicsForward ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES TalosJacInverseDynamicsForward)
+
+add_library(TalosJacInverseDynamicsReverse include/ct/models/Talos/codegen/TalosInverseDynJacReverse.cpp)
+target_link_libraries(TalosJacInverseDynamicsReverse ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES TalosJacInverseDynamicsReverse)
+
+## ForwardKinematics
+add_library(TalosJacForwardKinForward include/ct/models/Talos/codegen/TalosForwardKinJacForward.cpp)
+target_link_libraries(TalosJacForwardKinForward ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES TalosJacForwardKinForward)
+
+add_library(TalosJacForwardKinReverse include/ct/models/Talos/codegen/TalosForwardKinJacReverse.cpp)
+target_link_libraries(TalosJacForwardKinReverse ct_rbd )
+list(APPEND CT_MODELS_LIBRARIES TalosJacForwardKinReverse)
+
 
 
 ########## Inverted Pendulum #########
